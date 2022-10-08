@@ -1,0 +1,137 @@
+﻿<UserControl x:Class="HotelApplication.View.HotelRoomsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HotelApplication.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle}"/>
+        <Style TargetType="DatePicker" BasedOn="{StaticResource DatePickerStyle}"/>
+        <Style TargetType="DataGrid" BasedOn="{StaticResource DataGridStyle}"/>
+        <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBoxStyle}"/>
+        <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}"/>
+        <Style TargetType="Border" BasedOn="{StaticResource BorderStyle}"/>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Border BorderBrush="Black" BorderThickness="2" Grid.Row="1" Grid.Column="1">
+            <DataGrid ItemsSource="{Binding RoomDetails, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Room Number">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <TextBlock Text="{Binding RoomNumber}"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Room Type">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <TextBlock Text="{Binding RoomType}"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="100*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Room Number" />
+                <TextBlock Text="Room Type" />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" VerticalAlignment="Center">
+                <TextBox Text="{Binding RoomNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150" Margin="2"/>
+                <ComboBox ItemsSource="{Binding RoomTypeList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding SelectedRoomType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding .}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
+                <Button Content="Add" Command="{Binding AddDetails, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="Delete" Command="{Binding DeleteDetails, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="Update" Command="{Binding UpdateDetails, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ButtonStyle}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Button Width="60" Command="{Binding FiltersCollapsed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <materialDesign:PackIcon ToolTip="Collapse" Kind="ArrowCollapse" Foreground="Black" Background="Transparent"  HorizontalAlignment="Center"  VerticalAlignment="Center" Width="20" Height="20"/>
+                </Button>
+            </StackPanel>
+            <Border Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black" Visibility="{Binding FilterPressedCollapsed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="10"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="1" Grid.Column="1"  Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Room Number"/>
+                        <TextBlock Text="Room Type" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" VerticalAlignment="Center">
+                        <ComboBox ItemsSource="{Binding FilterRoomNumberList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding FilterRoomNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding .}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox ItemsSource="{Binding RoomTypeList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding FilterSelectedRoomType, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding .}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1"  Grid.Row="2" Grid.ColumnSpan="3" Orientation="Vertical">
+                        <Button Content="Reset All" Command="{Binding ResetAllFilters, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource ButtonStyle}" Width="200"/>
+                        <Button Content="Filter" Command="{Binding FilterCommand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource ButtonStyle}" Width="200"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

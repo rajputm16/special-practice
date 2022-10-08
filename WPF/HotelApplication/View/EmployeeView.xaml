@@ -1,0 +1,187 @@
+﻿<UserControl x:Class="HotelApplication.View.EmployeeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HotelApplication.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <Style TargetType="Border" BasedOn="{StaticResource BorderStyle}"/>
+        <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}"/>
+        <Style TargetType="DataGrid" BasedOn="{StaticResource DataGridStyle}"/>
+        <Style TargetType="DatePicker" BasedOn="{StaticResource DatePickerStyle}"/>
+        <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBoxStyle}"/>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+        <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" AlternatingRowBackground="LightGray"
+                  ItemsSource="{Binding Employees, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Employee Id">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <TextBlock Text="{Binding EmployeeId}" Padding="3"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Joining Date">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <TextBlock Text="{Binding JoiningDate}"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Gender">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <TextBlock Text="{Binding Gender}"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn  Header="Email">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <TextBlock Text="{Binding Email}"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn  Header="BirthDate">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <TextBlock Text="{Binding BirthDate}"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+        <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="100*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="EmployeeId"/>
+                <TextBlock Text="Name"/>
+                <TextBlock Text="Email"/>
+                <TextBlock Text="Birth Date"/>
+                <TextBlock Text="Joining Date"/>
+                <TextBlock Text="Gender"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" VerticalAlignment="Center">
+                <TextBox Text="{Binding EmployeeId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <DatePicker Text="{Binding BirthDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <DatePicker Text="{Binding JoiningDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <ComboBox ItemsSource="{Binding GenderList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding Gender, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding .}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+               
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
+                <Button Content="Add" Command="{Binding AddDetails, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="Delete" Command="{Binding DeleteDetails, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="Update" Command="{Binding UpdateDetails, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ButtonStyle}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Button Width="60" Style="{StaticResource ButtonStyle}" Command="{Binding FiltersCollapsed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <materialDesign:PackIcon Kind="ArrowCollapse" Foreground="Black" Background="Transparent"  HorizontalAlignment="Center"  VerticalAlignment="Center" Width="25" Height="25"/>
+                </Button>
+            </StackPanel>
+
+            <Border Grid.Row="4" Grid.Column="1" BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="3" Visibility="{Binding IsFilterPressed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="10"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="EmployeeId"/>
+                        <TextBlock Text="Name"/>
+                        <TextBlock Text="Joining Date"/>
+                        <TextBlock Text="Birth Date"/>
+                        <TextBlock Text="Email"/>
+                        <TextBlock Text="Gender"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" VerticalAlignment="Center">
+                        <TextBox Text="{Binding FilterEmployeeId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <TextBox Text="{Binding FilterName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <DatePicker Text="{Binding FilterJoiningDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <DatePicker Text="{Binding FilterBirthDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <TextBox Text="{Binding FilterEmail, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <ComboBox ItemsSource="{Binding GenderList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding FilterGender, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding .}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1"  Grid.Row="2" Grid.ColumnSpan="3" Orientation="Vertical">
+                        <Button  Width="200" Content="Reset All" Command="{Binding ResetAllFilters, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <Button Width="200" Content="Filter" Command="{Binding FilterCommand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
